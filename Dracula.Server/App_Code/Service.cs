@@ -26,4 +26,9 @@ public class Service : IService
 		}
 		return composite;
 	}
+
+	public void TestM(Action a)
+	{
+		a();
+	}
 }

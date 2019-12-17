@@ -10,12 +10,16 @@ using System.Text;
 [ServiceContract]
 public interface IService
 {
-
+	[WebGet]
+	[WebInvoke]
 	[OperationContract]
 	string GetData(int value);
 
 	[OperationContract]
 	CompositeType GetDataUsingDataContract(CompositeType composite);
+
+	[OperationContract]
+	void TestM(Action a);
 
 	// TODO: Add your service operations here
 }
