@@ -28,12 +28,20 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Dracula.Server", "Dracula.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dracula.Client.Core", "Dracula.Client\Dracula.Client.Core.csproj", "{5C810217-3A3D-45BF-9C92-ECF0ADCFD3A7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{F2963A82-231A-49BC-958F-090ED831F933}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dracula.DesktopServer", "ConsoleApp1\Dracula.DesktopServer.csproj", "{F2963A82-231A-49BC-958F-090ED831F933}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dracula.Client.Net", "Dracula.Client.Net\Dracula.Client.Net.csproj", "{BEE6C3F2-D735-4770-8A06-B63F3C700996}"
 	ProjectSection(ProjectDependencies) = postProject
 		{22B1E1E9-E352-4F5A-A0F0-C95EAE1DF67E} = {22B1E1E9-E352-4F5A-A0F0-C95EAE1DF67E}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dracula.Core", "Dracula.Core\Dracula.Core.csproj", "{97E1201B-14CB-4CE8-81BE-EA9975232C59}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{393B4A9C-98A8-439F-B49D-CFCE92D75CFC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoreLibs", "CoreLibs", "{8F8CB6AC-5F15-4D2A-937D-903821C3674D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NET.Core", "NET.Core", "{3E7CFE00-17B2-4F2C-B88F-3F4BC9CB2B55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,9 +65,18 @@ Global
 		{BEE6C3F2-D735-4770-8A06-B63F3C700996}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEE6C3F2-D735-4770-8A06-B63F3C700996}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEE6C3F2-D735-4770-8A06-B63F3C700996}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97E1201B-14CB-4CE8-81BE-EA9975232C59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97E1201B-14CB-4CE8-81BE-EA9975232C59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97E1201B-14CB-4CE8-81BE-EA9975232C59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97E1201B-14CB-4CE8-81BE-EA9975232C59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{22B1E1E9-E352-4F5A-A0F0-C95EAE1DF67E} = {393B4A9C-98A8-439F-B49D-CFCE92D75CFC}
+		{5C810217-3A3D-45BF-9C92-ECF0ADCFD3A7} = {3E7CFE00-17B2-4F2C-B88F-3F4BC9CB2B55}
+		{97E1201B-14CB-4CE8-81BE-EA9975232C59} = {8F8CB6AC-5F15-4D2A-937D-903821C3674D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5E36ADBB-8B9C-41B1-B7EC-9DC375790F4E}
