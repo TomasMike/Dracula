@@ -1,0 +1,23 @@
+﻿@using Dracula.Web.NET.Data
+@using Dracula.Web.NET.Models
+@model User
+@{
+	ViewBag.Title = "Home Page main menu index";
+}
+<div class="row">
+	@if (string.IsNullOrEmpty(Model?.Name))
+	{
+		using (Html.BeginForm("CreateUser", "MainMenu", FormMethod.Post))
+		{
+			<label>Player Name:</label>@Html.TextBox("Name")
+			<input type="submit" value="Create User" />
+		}
+	}
+	else
+	{
+		foreach (var user in DataStorage.GetUsers())
+		{
+			<p>@user.Name</p>
+		}
+	}
+</div>
