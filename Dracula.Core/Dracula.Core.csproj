@@ -41,11 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommServer.cs" />
-    <Compile Include="CommClient.cs" />
-    <Compile Include="RequestObj.cs" />
-    <Compile Include="RequestType.cs" />
-    <Compile Include="SeriDeseriXmlUtil.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="LobbyManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

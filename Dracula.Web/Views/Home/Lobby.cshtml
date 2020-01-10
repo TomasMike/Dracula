@@ -1,0 +1,15 @@
+﻿@page
+<div class="row">
+	<div class="col-6">
+		<p>Lobby</p>
+		@using (Html.BeginForm("StartGame", "Home"))
+		{
+			<input type="submit" value="Start Game" />
+		}
+	</div>
+	<div id="PlayerList" class="col-6">
+		<button onclick="test()">test</button>
+	</div>
+</div>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/lobby.js"></script>

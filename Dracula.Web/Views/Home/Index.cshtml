@@ -1,0 +1,24 @@
+﻿@using Dracula.Web.Models
+@model LoginModel
+@{
+	var x = 3;
+}
+<h1>Game</h1>
+
+<div class="row">
+	<div class="col-2">User</div>
+	<div class="col-4">
+		@*<@.
+		@Html.TextBoxFor(m => m.Name)
+			@Html.ActionLink("Login", "LoginUser", "Home", new {name = Model.Name })*@
+		@using (Html.BeginForm("LoginUser", "Home"))
+		{
+			@Html.TextBox("name")
+			<input type="submit" value="Login" />
+		}
+		@if (Model.IsError)
+		{
+			<span style="color: red">Zle meno</span>
+		}
+	</div>
+	</div>
