@@ -3,11 +3,17 @@ using System.Linq;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 using Dracula.Core;
+using Newtonsoft.Json;
 
 namespace Dracula.Web.Hubs
 {
 	public class LobbyHub : Hub
 	{
+		public LobbyHub() : base()
+		{
+
+		}
+
 		//zavolane ked niekto posle msg
 		public async Task SendMessage(string user, string message)
 		{
@@ -16,10 +22,48 @@ namespace Dracula.Web.Hubs
 			await Clients.All.SendAsync("ReceiveMessage", user, message);
 		}
 
-		public async Task PlayerJoinedLobby()
+		public async Task PlayerJoinedLobbySend()
 		{
-			object x = null;
-			await Clients.All.SendAsync("PlayerJoinedLobbyTEST", x);
+			object x = LobbyManager.Players;
+			RefreshPlayerList();
 		}
+
+		public async Task MoveSend(string direction, string name)
+		{
+			var player = LobbyManager.GetPlayerByName(name);
+
+			switch (direction)
+			{
+				case "up":
+					player.TopOffset -= 10; break;
+				case "down":
+					player.TopOffset += 10; break;
+				case "left":
+					player.LeftOffset += 10; break;
+				case "right":
+					player.LeftOffset -= 10; break;
+			}
+
+			await Clients.All.SendAsync("MoveReceive", JsonConvert.SerializeObject(LobbyManager.Players));
+		}
+
+		public async Task KickPlayer(string name)
+		{
+			LobbyManager.Players.RemoveAll(_ => _.Name == name);
+		//Clients.Caller.
+			//RefreshPlayerList();
+		}
+
+
+		private async void RefreshPlayerList()
+		{
+			await Clients.All.SendAsync("LobbyPlayerListRefresh", LobbyManager.GetPlayersSimpleObj());
+		}
+
+
+		//public override Task OnConnected()
+		//{
+
+		//}
 	}
 }

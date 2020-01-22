@@ -39,6 +39,7 @@ namespace Dracula.Web
 
 			LobbyManager.AddPlayer(name);
 
+			ViewBag.Name = name;
 			return View("Lobby");
 		}
 
