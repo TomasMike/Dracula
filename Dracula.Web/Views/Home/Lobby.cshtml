@@ -1,5 +1,4 @@
-﻿@page
-@using Dracula.Web.Models
+﻿@using Dracula.Web.Models
 @model LobbyModel
 <input id="playerNameHidden" type="hidden" value="" />
 <div class="row">
@@ -19,13 +18,21 @@
 		<div id="parentBox"></div>
 	</div>
 	<div class="col-4">
-		<table id="PlayerList"></table>
+		<table id="PlayerList">
+			<thead>
+			<tr>
+				<td>Player Name</td>
+				<td>Kick Player</td>
+				<td>Dracula</td>
+			</tr>
+			</thead>
+		</table>
 	</div>
 </div>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/lobby.js"></script>
 <script type="text/javascript" language="javascript">
-	
+	appSettings.playersData = JSON.parse('@Html.Raw(Model.Data)');
 	appSettings.playerName = '@Html.Raw(ViewBag.Name)';
 	@*var x = '@ViewBag.Name';
 	var HtmlRaw = '@Html.Raw(ViewBag.Name)';

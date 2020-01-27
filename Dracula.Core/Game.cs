@@ -16,5 +16,15 @@ namespace Dracula.Core
 		public string Name;
 		public int TopOffset;
 		public int LeftOffset;
+		public Character? SelectedCharacter;
+	}
+
+	public enum Character
+	{
+		Dracula,
+		LordGodalming,
+		DrJohnStewart,
+		VanHelsing,
+		MinaHarker,
 	}
 }

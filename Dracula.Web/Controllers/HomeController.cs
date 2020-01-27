@@ -21,7 +21,7 @@ namespace Dracula.Web
 		[Route("/Route/Lobby")]
 		public IActionResult Lobby()
 		{
-			return View();
+			return View(new LobbyModel() { Data = LobbyManager.GetPlayersSimpleObj()});
 		}
 
 		[Route("/Route/Game")]
@@ -40,7 +40,7 @@ namespace Dracula.Web
 			LobbyManager.AddPlayer(name);
 
 			ViewBag.Name = name;
-			return View("Lobby");
+			return View("Lobby", new LobbyModel() { Data = LobbyManager.GetPlayersSimpleObj() });
 		}
 
 		public IActionResult StartGame()

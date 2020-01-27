@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
@@ -17,14 +18,13 @@ namespace Dracula.Web.Hubs
 		//zavolane ked niekto posle msg
 		public async Task SendMessage(string user, string message)
 		{
-			DataStorage.ChatHistory.Add(new { user=user,message=message});
+			DataStorage.ChatHistory.Add(new { user = user, message = message });
 			//server povie vsetkym napojenim ze dostal message a nech si ju zobrazia
 			await Clients.All.SendAsync("ReceiveMessage", user, message);
 		}
 
 		public async Task PlayerJoinedLobbySend()
 		{
-			object x = LobbyManager.Players;
 			RefreshPlayerList();
 		}
 
@@ -50,7 +50,7 @@ namespace Dracula.Web.Hubs
 		public async Task KickPlayer(string name)
 		{
 			LobbyManager.Players.RemoveAll(_ => _.Name == name);
-		//Clients.Caller.
+			//Clients.Caller.
 			//RefreshPlayerList();
 		}
 
@@ -61,9 +61,24 @@ namespace Dracula.Web.Hubs
 		}
 
 
-		//public override Task OnConnected()
-		//{
+		public override Task OnDisconnectedAsync(Exception exception)
+		{
+			throw new NotImplementedException();
+		}
 
-		//}
+		public async Task PlayerDataChangedSend(string data)
+		{
+			var x = new System.Xml.XmlDocument();
+			try
+			{
+				x.LoadXml(data);
+			}
+			catch (Exception)
+			{
+
+				throw;
+			}
+		}
+
 	}
 }

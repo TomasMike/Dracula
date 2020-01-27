@@ -20,7 +20,13 @@ namespace Dracula.Web
 
 		public static void AddPlayer(string name)
 		{
-			Players.Add(new Player(){Name = name, LeftOffset = r.Next(100),TopOffset = r.Next(100)});
+			Players.Add(new Player()
+			{
+				Name = name, 
+				LeftOffset = r.Next(100),
+				TopOffset = r.Next(100),
+				SelectedCharacter = GetNextAvailableCharacter()
+			});
 		}
 
 		public static bool IsNickAvailable(string nick)
@@ -37,5 +43,17 @@ namespace Dracula.Web
 		{
 			return Players.FirstOrDefault(_ => _.Name == name);
 		}
+
+		public static Character? GetNextAvailableCharacter()
+		{
+			foreach (Character c in Enum.GetValues(typeof(Character)))
+			{
+				if (Players.All(_ => _.SelectedCharacter != c))
+					return c;
+			}
+
+			return null;
+		}
+
 	}
 }
