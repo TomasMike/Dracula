@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Dracula.Web
 {
@@ -21,6 +23,13 @@ namespace Dracula.Web
 				.ConfigureWebHostDefaults(webBuilder =>
 				{
 					webBuilder.UseStartup<Startup>();
+
+					JsonConvert.DefaultSettings = () =>
+					{
+						var settings = new JsonSerializerSettings();
+						settings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
+						return settings;
+					};
 				});
 	}
 }

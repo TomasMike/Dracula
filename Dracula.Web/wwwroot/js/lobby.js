@@ -9,8 +9,8 @@
 
 "use strict";
 var connection = new signalR.HubConnectionBuilder().withUrl("/lobbyHub").build();
-var parentBox;
-console.log("lobby.js");
+var MoveDivParentBox;
+
 var appSettings = {
 	playerName: "",
 	PlayerListTable:null
@@ -19,7 +19,7 @@ connection.start().then(function ()
 {
 	console.log("connectionStart");
 
-	parentBox = document.getElementById("parentBox");
+	MoveDivParentBox = document.getElementById("parentBox");
 
 	connection.invoke("PlayerJoinedLobbySend")
 		.catch(function (err) 
@@ -31,21 +31,28 @@ connection.start().then(function ()
 	return console.error(err.toString());
 });
 
-connection.on("LobbyPlayerListRefresh", function (players) 
+connection.on("LobbyPlayerListRefresh", function (playerListJson) 
 {
 
-	debugger;
-	var pl = JSON.parse(players);
-	//update player list
-	Array.prototype.forEach.call($(appSettings.PlayerListTable).find("tr.playerRow"), child =>
-	{
-		appSettings.PlayerListTable.removeChild(child);
-	});
 
-	pl.forEach(function (p) 
-	{
-		var r = GenerateLobbyRow(p);
-		$(appSettings.PlayerListTable).append(r);
+
+	debugger;
+	var playerList = JSON.parse(playerListJson);
+	//update player list
+	//Array.prototype.forEach.call($(appSettings.PlayerListTable).find("tr.playerRow"), child =>
+	//{
+	//	appSettings.PlayerListTable.removeChild(child);
+	//});
+
+	playerList.forEach(function (player) {
+		var row = $("#PlayerList>tr.playerRow[data-playerName='" + player.Name + "']")[0];
+		if (row === undefined) {
+			var r = GenerateLobbyRow(player);
+			$(appSettings.PlayerListTable).append(r);
+		} else {
+			
+			$(row).find("*[data-character='dracula']")
+		}
 	});
 	
 	$("#PlayerList input[type='checkbox']").change(function ()
@@ -63,6 +70,7 @@ function GenerateLobbyRow(p)
 {
 	var row = document.createElement("tr");
 	$(row).addClass("playerRow");
+	$(row).data("playerName", p.Name);
 	var name = $("<td></td>").text(p.Name);
 	var b = document.createElement("button");
 	$(b).attr("onclick", "console.log(\"" + p.Name + "\");");
@@ -70,36 +78,16 @@ function GenerateLobbyRow(p)
 	$(row).append(
 		name,
 		$("<td></td>").append(b),
-		"<td><input type='checkbox' name=\"" + p.Name + "_" + "Dracula\"" + (p.SelectedCharacter === 0 ? "checked" : "") +"'></input></td>",
-		"<td><input type='checkbox' name=\"" + p.Name + "_" + "LordGodalming\"" + (p.SelectedCharacter === 1 ? "checked" : "") +"'></input></td>",
-		"<td><input type='checkbox' name=\"" + p.Name + "_" + "DrJohnStewart\"" + (p.SelectedCharacter === 2 ? "checked" : "") +"'></input></td>",
-		"<td><input type='checkbox' name=\"" + p.Name + "_" + "VanHelsing\"" + (p.SelectedCharacter === 3 ? "checked" : "") +"'></input></td>",
-		"<td><input type='checkbox' name=\"" + p.Name + "_" + "MinaHarker\"" + (p.SelectedCharacter === 4 ? "checked" : "") +"'></input></td>"
-
-		);
+		"<td><input type='checkbox' data-playerName ='" + p.Name + "' data-character='dracula' " + (p.SelectedCharacter === 'dracula' ? "checked" : "") + " ></input></td>",
+		"<td><input type='checkbox' data-playerName ='" + p.Name + "' data-character='lordGodalming' " + (p.SelectedCharacter === 'lordGodalming' ? "checked" : "") + " ></input></td>",
+		"<td><input type='checkbox' data-playerName ='" + p.Name + "' data-character='drJohnStewart' " + (p.SelectedCharacter === 'drJohnStewart' ? "checked" : "") + " ></input></td>",
+		"<td><input type='checkbox' data-playerName ='" + p.Name + "' data-character='vanHelsing' " + (p.SelectedCharacter === 'vanHelsing' ? "checked" : "") + " ></input></td>",
+		"<td><input type='checkbox' data-playerName ='" + p.Name + "' data-character='minaHarker' " + (p.SelectedCharacter === 'minaHarker' ? "checked" : "") + " ></input></td>"
+	);
 	return row;
 }
 
-connection.on("MoveReceive", function (players)
-{
-	
-	var pl = JSON.parse(players);
-	Array.prototype.forEach.call(parentBox.children, child =>
-	{
-		parentBox.removeChild(child);
-	});
 
-	pl.forEach(function (p)
-	{
-		var d = document.createElement("div");
-		
-		d.textContent = p.Name;
-		$(d).css("top", p.TopOffset);
-		$(d).css("left", p.LeftOffset);
-		$(d).css("position", "absolute");
-		parentBox.appendChild(d);
-	});
-});
 
 function up() {  connection.invoke("MoveSend", "up", appSettings.playerName);}
 function down() {connection.invoke("MoveSend", "down", appSettings.playerName);}
@@ -111,4 +99,23 @@ function KickPlayerFromLobby()
 	//connection.
 }
 
+connection.on("MoveReceive", function (players)
+{
 
+	var pl = JSON.parse(players);
+	//Array.prototype.forEach.call(parentBox.children, child =>
+	//{
+	//	parentBox.removeChild(child);
+	//});
+
+	pl.forEach(function (p)
+	{
+		var d = document.createElement("div");
+
+		d.textContent = p.Name;
+		$(d).css("top", p.TopOffset);
+		$(d).css("left", p.LeftOffset);
+		$(d).css("position", "absolute");
+		MoveDivParentBox.appendChild(d);
+	});
+});

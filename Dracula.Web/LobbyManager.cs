@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Dracula.Core;
 using Dracula.Web.Hubs;
 using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json;

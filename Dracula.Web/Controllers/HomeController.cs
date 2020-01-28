@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Dracula.Core;
 using Dracula.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
