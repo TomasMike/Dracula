@@ -1,0 +1,35 @@
+{
+  "name": "jquery-ts",
+  "description": "jQuery with highly modular TypeScript type definitions.",
+  "version": "2.1.1",
+  "author": {
+    "name": "András Parditka"
+  },
+  "main": "index.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andraaspar/jquery-ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/andraaspar/jquery-ts/issues"
+  },
+  "homepage": "https://github.com/andraaspar/jquery-ts#readme",
+  "devDependencies": {
+    "@types/jasmine": "2.5.40",
+    "@types/jsdom": "2.0.29",
+    "jasmine": "2.5.2",
+    "jsdom": "9.9.1",
+    "rimraf": "2.5.4",
+    "typescript": "2.1.4"
+  },
+  "dependencies": {
+    "jquery": "^3.0.0"
+  },
+  "scripts": {
+    "clean": "rimraf *.js *.d.ts",
+    "build": "tsc --declaration",
+    "test": "jasmine",
+    "cleanBuildTest": "npm run clean && npm run build && npm run test"
+  }
+}

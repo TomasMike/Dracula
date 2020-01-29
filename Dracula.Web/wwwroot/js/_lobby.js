@@ -33,31 +33,29 @@ connection.start().then(function ()
 
 connection.on("LobbyPlayerListRefresh", function (playerListJson) 
 {
-
-
-
-	debugger;
 	var playerList = JSON.parse(playerListJson);
-	//update player list
-	//Array.prototype.forEach.call($(appSettings.PlayerListTable).find("tr.playerRow"), child =>
-	//{
-	//	appSettings.PlayerListTable.removeChild(child);
-	//});
-
+	
 	playerList.forEach(function (player) {
-		var row = $("#PlayerList>tr.playerRow[data-playerName='" + player.Name + "']")[0];
-		if (row === undefined) {
+		debugger;
+		var row = $("#PlayerList>tr.playerRow[data-player-name='" + player.Name + "']");
+		if (row === undefined || row.length === 0) 
+		{
 			var r = GenerateLobbyRow(player);
 			$(appSettings.PlayerListTable).append(r);
-		} else {
-			
-			$(row).find("*[data-character='dracula']")
+		}
+		else {
+			$(row).find("*[data-character='dracula']").prop("checked", player.SelectedCharacter === "dracula");
+			$(row).find("*[data-character='lordGodalming']").prop("checked", player.SelectedCharacter === "lordGodalming");
+			$(row).find("*[data-character='drJohnStewart']").prop("checked", player.SelectedCharacter === "drJohnStewart");
+			$(row).find("*[data-character='vanHelsing']").prop("checked", player.SelectedCharacter === "vanHelsing");
+			$(row).find("*[data-character='minaHarker']").prop("checked", player.SelectedCharacter === "minaHarker");
 		}
 	});
 	
-	$("#PlayerList input[type='checkbox']").change(function ()
+	$("#PlayerList input[type='checkbox']").change(function (e) 
 	{
-		connection.invoke("PlayerDataChangedSend")
+		debugger;
+		connection.invoke("PlayerDataChangedSend", appSettings.PlayerListTable.outerHTML)
 			.catch(function (err) 
 			{
 				console.info(err);
@@ -69,6 +67,7 @@ connection.on("LobbyPlayerListRefresh", function (playerListJson)
 function GenerateLobbyRow(p)
 {
 	var row = document.createElement("tr");
+	row.dataset.playerName = p.Name;
 	$(row).addClass("playerRow");
 	$(row).data("playerName", p.Name);
 	var name = $("<td></td>").text(p.Name);
@@ -78,11 +77,11 @@ function GenerateLobbyRow(p)
 	$(row).append(
 		name,
 		$("<td></td>").append(b),
-		"<td><input type='checkbox' data-playerName ='" + p.Name + "' data-character='dracula' " + (p.SelectedCharacter === 'dracula' ? "checked" : "") + " ></input></td>",
-		"<td><input type='checkbox' data-playerName ='" + p.Name + "' data-character='lordGodalming' " + (p.SelectedCharacter === 'lordGodalming' ? "checked" : "") + " ></input></td>",
-		"<td><input type='checkbox' data-playerName ='" + p.Name + "' data-character='drJohnStewart' " + (p.SelectedCharacter === 'drJohnStewart' ? "checked" : "") + " ></input></td>",
-		"<td><input type='checkbox' data-playerName ='" + p.Name + "' data-character='vanHelsing' " + (p.SelectedCharacter === 'vanHelsing' ? "checked" : "") + " ></input></td>",
-		"<td><input type='checkbox' data-playerName ='" + p.Name + "' data-character='minaHarker' " + (p.SelectedCharacter === 'minaHarker' ? "checked" : "") + " ></input></td>"
+		"<td><input type='checkbox' data-player-name ='" + p.Name + "' data-character='dracula' " + (p.SelectedCharacter === 'dracula' ? "checked" : "") + " ></input></td>",
+		"<td><input type='checkbox' data-player-name ='" + p.Name + "' data-character='lordGodalming' " + (p.SelectedCharacter === 'lordGodalming' ? "checked" : "") + " ></input></td>",
+		"<td><input type='checkbox' data-player-name ='" + p.Name + "' data-character='drJohnStewart' " + (p.SelectedCharacter === 'drJohnStewart' ? "checked" : "") + " ></input></td>",
+		"<td><input type='checkbox' data-player-name ='" + p.Name + "' data-character='vanHelsing' " + (p.SelectedCharacter === 'vanHelsing' ? "checked" : "") + " ></input></td>",
+		"<td><input type='checkbox' data-player-name ='" + p.Name + "' data-character='minaHarker' " + (p.SelectedCharacter === 'minaHarker' ? "checked" : "") + " ></input></td>"
 	);
 	return row;
 }
@@ -103,10 +102,10 @@ connection.on("MoveReceive", function (players)
 {
 
 	var pl = JSON.parse(players);
-	//Array.prototype.forEach.call(parentBox.children, child =>
-	//{
-	//	parentBox.removeChild(child);
-	//});
+	Array.prototype.forEach.call(parentBox.children, child =>
+	{
+		parentBox.removeChild(child);
+	});
 
 	pl.forEach(function (p)
 	{
