@@ -9,8 +9,8 @@
 
 "use strict";
 var connection = new signalR.HubConnectionBuilder().withUrl("/lobbyHub").build();
-var MoveDivParentBox;
-
+var parentBox;
+console.log("lobby.js");
 var appSettings = {
 	playerName: "",
 	PlayerListTable:null
@@ -19,7 +19,7 @@ connection.start().then(function ()
 {
 	console.log("connectionStart");
 
-	MoveDivParentBox = document.getElementById("parentBox");
+	parentBox = document.getElementById("parentBox");
 
 	connection.invoke("PlayerJoinedLobbySend")
 		.catch(function (err) 
@@ -31,7 +31,7 @@ connection.start().then(function ()
 	return console.error(err.toString());
 });
 
-connection.on("LobbyPlayerListRefresh", function (playerListJson) 
+connection.on("LobbyPlayerListRefresh", function (players) 
 {
 	var playerList = JSON.parse(playerListJson);
 	
@@ -69,7 +69,6 @@ function GenerateLobbyRow(p)
 	var row = document.createElement("tr");
 	row.dataset.playerName = p.Name;
 	$(row).addClass("playerRow");
-	$(row).data("playerName", p.Name);
 	var name = $("<td></td>").text(p.Name);
 	var b = document.createElement("button");
 	$(b).attr("onclick", "console.log(\"" + p.Name + "\");");
@@ -86,7 +85,26 @@ function GenerateLobbyRow(p)
 	return row;
 }
 
+connection.on("MoveReceive", function (players)
+{
+	
+	var pl = JSON.parse(players);
+	Array.prototype.forEach.call(parentBox.children, child =>
+	{
+		parentBox.removeChild(child);
+	});
 
+	pl.forEach(function (p)
+	{
+		var d = document.createElement("div");
+		
+		d.textContent = p.Name;
+		$(d).css("top", p.TopOffset);
+		$(d).css("left", p.LeftOffset);
+		$(d).css("position", "absolute");
+		parentBox.appendChild(d);
+	});
+});
 
 function up() {  connection.invoke("MoveSend", "up", appSettings.playerName);}
 function down() {connection.invoke("MoveSend", "down", appSettings.playerName);}
@@ -98,23 +116,4 @@ function KickPlayerFromLobby()
 	//connection.
 }
 
-connection.on("MoveReceive", function (players)
-{
 
-	var pl = JSON.parse(players);
-	Array.prototype.forEach.call(parentBox.children, child =>
-	{
-		parentBox.removeChild(child);
-	});
-
-	pl.forEach(function (p)
-	{
-		var d = document.createElement("div");
-
-		d.textContent = p.Name;
-		$(d).css("top", p.TopOffset);
-		$(d).css("left", p.LeftOffset);
-		$(d).css("position", "absolute");
-		MoveDivParentBox.appendChild(d);
-	});
-});

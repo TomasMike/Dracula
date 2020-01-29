@@ -5,40 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\js\file.ts" />
-    <Content Remove="wwwroot\js\lobby.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="node_modules\%40types\jquery\package.json" />
-    <Content Include="node_modules\%40types\sizzle\package.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="node_modules\%40types\jquery\LICENSE" />
-    <None Include="node_modules\%40types\jquery\README.md" />
-    <None Include="node_modules\%40types\sizzle\LICENSE" />
-    <None Include="node_modules\%40types\sizzle\README.md" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
-    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.7.4">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="node_modules\%40types\jquery\dist\jquery.slim.d.ts" />
-    <TypeScriptCompile Include="node_modules\%40types\jquery\index.d.ts" />
-    <TypeScriptCompile Include="node_modules\%40types\jquery\JQuery.d.ts" />
-    <TypeScriptCompile Include="node_modules\%40types\jquery\JQueryStatic.d.ts" />
-    <TypeScriptCompile Include="node_modules\%40types\jquery\legacy.d.ts" />
-    <TypeScriptCompile Include="node_modules\%40types\jquery\misc.d.ts" />
-    <TypeScriptCompile Include="node_modules\%40types\sizzle\index.d.ts" />
-    <TypeScriptCompile Include="wwwroot\js\file.ts" />
   </ItemGroup>
 
 

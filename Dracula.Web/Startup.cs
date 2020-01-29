@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Dracula.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,8 +10,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using  Dracula.Web.Hubs;
 using Microsoft.AspNetCore.Routing.Template;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Dracula.Web
 {
@@ -34,14 +33,6 @@ namespace Dracula.Web
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
-
-			JsonConvert.DefaultSettings = () =>
-			{
-				var settings = new JsonSerializerSettings();
-				settings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
-				return settings;
-			};
-
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
+using Dracula.Core;
 using Newtonsoft.Json;
 
 namespace Dracula.Web.Hubs
