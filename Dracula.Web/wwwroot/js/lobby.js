@@ -7,10 +7,8 @@
 	appSettings.PlayerListTable = document.getElementById("PlayerList");
 });
 
-"use strict";
 var connection = new signalR.HubConnectionBuilder().withUrl("/lobbyHub").build();
 var parentBox;
-console.log("lobby.js");
 var appSettings = {
 	playerName: "",
 	PlayerListTable:null
