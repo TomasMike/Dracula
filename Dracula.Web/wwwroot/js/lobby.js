@@ -29,7 +29,7 @@ connection.start().then(function ()
 	return console.error(err.toString());
 });
 
-connection.on("LobbyPlayerListRefresh", function (players) 
+connection.on("LobbyPlayerListRefresh", function (playerListJson) 
 {
 	var playerList = JSON.parse(playerListJson);
 	
