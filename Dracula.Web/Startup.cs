@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using  Dracula.Web.Hubs;
 using Microsoft.AspNetCore.Routing.Template;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Dracula.Web
 {
@@ -62,6 +64,12 @@ namespace Dracula.Web
 				endpoints.MapHub<LobbyHub>("/lobbyHub");
 			});
 
+			JsonConvert.DefaultSettings = (() =>
+			{
+				var settings = new JsonSerializerSettings();
+				settings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
+				return settings;
+			});
 			LobbyManager.Init();
 		}
 	}
