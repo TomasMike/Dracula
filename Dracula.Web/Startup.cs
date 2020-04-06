@@ -45,7 +45,7 @@ namespace Dracula.Web
 				app.UseHsts();
 			}
 
-			app.UseHttpsRedirection();
+			//app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseMvc(routes =>
 			{

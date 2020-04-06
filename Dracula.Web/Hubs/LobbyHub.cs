@@ -4,6 +4,8 @@ using System.Linq;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using HtmlAgilityPack;
+using Newtonsoft.Json.Linq;
 
 namespace Dracula.Web.Hubs
 {
@@ -67,15 +69,10 @@ namespace Dracula.Web.Hubs
 
 		public async Task PlayerDataChangedSend(string data)
 		{
-			var x = new System.Xml.XmlDocument();
-			try
+			var jData = (JObject)JsonConvert.DeserializeObject(data);
+			foreach (var item in jData.Children())
 			{
-				x.LoadXml(data);
-			}
-			catch (Exception)
-			{
-
-				throw;
+				//LobbyManager.Players.FirstOrDefault
 			}
 		}
 

@@ -34,7 +34,6 @@ connection.on("LobbyPlayerListRefresh", function (playerListJson)
 	var playerList = JSON.parse(playerListJson);
 	
 	playerList.forEach(function (player) {
-		debugger;
 		var row = $("#PlayerList>tr.playerRow[data-player-name='" + player.Name + "']");
 		if (row === undefined || row.length === 0) 
 		{
@@ -52,8 +51,12 @@ connection.on("LobbyPlayerListRefresh", function (playerListJson)
 	
 	$("#PlayerList input[type='checkbox']").change(function (e) 
 	{
-		debugger;
-		connection.invoke("PlayerDataChangedSend", appSettings.PlayerListTable.outerHTML)
+		var selectedChar = $(e.currentTarget).data("character");
+		var selectedPlayer = $(e.currentTarget).data("playerName");
+		$("#PlayerList").find("input[data-character='" + selectedChar + "']").prop("checked", false)
+		$("#PlayerList").find("input[data-player-name='" + selectedPlayer + "']").prop("checked", false)
+		$(e.currentTarget).prop("checked", true);
+		connection.invoke("PlayerDataChangedSend", JSON.stringify(getPlayerDataJSON()))
 			.catch(function (err) 
 			{
 				console.info(err);
@@ -112,6 +115,25 @@ function right() { connection.invoke("MoveSend", "right", appSettings.playerName
 function KickPlayerFromLobby()
 {
 	//connection.
+}
+
+
+function getPlayerDataJSON()
+{
+	var playerData = {};
+
+	$("#PlayerList>tr.playerRow").each(function (i, row)
+	{
+		var rowData = {};
+		$(row).find("*[data-character]").each(function (j, input)
+		{
+			//rowdata
+			rowData[$(input).data("character")] = $(input).prop("checked");
+		});
+		playerData[$(row).data("playerName")] = rowData
+	});
+
+	return playerData;
 }
 
 
