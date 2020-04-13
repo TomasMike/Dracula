@@ -1,0 +1,46 @@
+﻿@using Dracula.Web.Models
+@model LobbyModel
+@Scripts.Render("~/Scripts/code/lobby.js")
+
+<input id="playerNameHidden" type="hidden" value="" />
+<div class="row">
+	<div class="col-4">
+		<p>Lobby</p>
+		<p>Logged as: @ViewBag.Name</p>
+		@using (Html.BeginForm("StartGame", "Home"))
+		{
+			<input type="submit" value="Start Game" />
+		}
+	</div>
+	<div class="col-4">
+		<button onclick="up()">Up</button>
+		<button onclick="down()">Down</button>
+		<button onclick="left()">Left</button>
+		<button onclick="right()">Right</button>
+		<div id="parentBox"></div>
+		<input type="checkbox" id="mycheck" />
+	</div>
+	<div class="col-4">
+		<table id="PlayerList">
+			<thead>
+				<tr>
+					<td>Player Name</td>
+					<td>Kick Player</td>
+					<td>Dracula</td>
+					<td>Lord Godalming</td>
+					<td>Dr. John Stewart</td>
+					<td>Van Helsing</td>
+					<td>Mina Harker</td>
+				</tr>
+			</thead>
+		</table>
+	</div>
+</div>
+@*<script src="~/js/lobby.js"></script>*@
+@*<script type="text/javascript" language="javascript">
+	appSettings.playersData = JSON.parse('@Html.Raw(Model.Data)');
+	appSettings.playerName = '@Html.Raw(ViewBag.Name)';
+	@*var x = '@ViewBag.Name';
+	var HtmlRaw = '@Html.Raw(ViewBag.Name)';
+	document.getElementById("playerNameHidden").value = '@Html.Raw(ViewBag.Name)';*@
+@*</script>*@

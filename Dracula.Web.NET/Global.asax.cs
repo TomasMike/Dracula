@@ -16,6 +16,10 @@ namespace Dracula.Web.NET
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            LobbyManager.Init();
+            
         }
+
+        
     }
 }

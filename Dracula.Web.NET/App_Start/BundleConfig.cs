@@ -9,7 +9,7 @@ namespace Dracula.Web.NET
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js", "~/Scripts/jquery.signalR-2.2.2.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -22,9 +22,18 @@ namespace Dracula.Web.NET
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/signalr").Include(
+          "~/Scripts/signalr.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/code").Include(
+            //            "~/Scripts/code/chat.js",
+            //            "~/Scripts/code/lobby.js",
+            //            "~/Scripts/code/site.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
         }
     }
 }

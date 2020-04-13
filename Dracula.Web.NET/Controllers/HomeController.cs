@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Dracula.Web.Models;
 using System.Web.Mvc;
 
 namespace Dracula.Web.NET.Controllers
@@ -10,21 +7,44 @@ namespace Dracula.Web.NET.Controllers
     {
         public ActionResult Index()
         {
+            return View(new LoginModel());
+        }
+
+        [Route("/Route/Lobby")]
+        public ActionResult Lobby()
+        {
+            return View(new LobbyModel() { Data = LobbyManager.GetPlayersSimpleObj() });
+        }
+
+        [Route("/Route/Game")]
+        public ActionResult Game()
+        {
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult LoginUser(string name)
         {
-            ViewBag.Message = "Your application description page.";
+            if (string.IsNullOrEmpty(name) || !LobbyManager.IsNickAvailable(name))
+            {
+                return View("Index", new LoginModel() { IsError = true });
+            }
 
-            return View();
+            LobbyManager.AddPlayer(name);
+
+            ViewBag.Name = name;
+            return View("Lobby", new LobbyModel() { Data = LobbyManager.GetPlayersSimpleObj() });
         }
 
-        public ActionResult Contact()
+        public ActionResult StartGame()
         {
-            ViewBag.Message = "Your contact page.";
 
-            return View();
+            return View("Game",new GameModel());
+        }
+
+
+        private string GenerateLocationDivs()
+        {
+
         }
     }
 }
